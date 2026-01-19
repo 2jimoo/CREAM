@@ -31,14 +31,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-  <!-- Optional: Social preview (update these if you have images/URLs) -->
-  <meta property="og:title" content="CREAM: Continual Retrieval on Dynamic Streaming Corpora with Adaptive Soft Memory" />
-  <meta property="og:description" content="A self-supervised continual retrieval framework with adaptive soft memory for dynamic streaming corpora." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://YOUR_DOMAIN.com/cream" />
-  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-
   <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -187,49 +179,6 @@
     <i class="fas fa-chevron-up"></i>
   </button>
 
-  <!-- More Works Dropdown (optional; update items as needed) -->
-  <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works">
-      <i class="fas fa-flask"></i>
-      More Works
-      <i class="fas fa-chevron-down dropdown-arrow"></i>
-    </button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header">
-        <h4>More Works</h4>
-        <button class="close-btn" onclick="toggleMoreWorks()" aria-label="Close dropdown">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="works-list">
-        <a href="https://arxiv.org/abs/2601.02708" class="work-item" target="_blank" rel="noopener">
-          <div class="work-info">
-            <h5>CREAM (arXiv)</h5>
-            <p>Continual retrieval on dynamic streaming corpora with adaptive soft memory.</p>
-            <span class="work-venue">arXiv 2026</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <a href="https://github.com/DAIS-KU/CREAM" class="work-item" target="_blank" rel="noopener">
-          <div class="work-info">
-            <h5>CREAM Code</h5>
-            <p>Official implementation repository.</p>
-            <span class="work-venue">GitHub</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <a href="https://doi.org/10.1145/3770854.3780281" class="work-item" target="_blank" rel="noopener">
-          <div class="work-info">
-            <h5>KDD 2026 Proceedings (DOI)</h5>
-            <p>ACM Digital Library entry for the paper.</p>
-            <span class="work-venue">KDD 2026</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-
   <main id="main-content">
     <section class="hero">
       <div class="hero-body">
@@ -354,6 +303,124 @@
         </div>
       </div>
     </section>
+
+    <!-- Article -->
+<section class="section" id="article">
+  <div class="container is-max-desktop">
+
+    <!-- Motivation -->
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content">
+          <p>
+            In continual retrieval over dynamic streaming corpora, topics and semantics evolve over time.
+            Existing memory-based methods typically rely on a fixed set of predefined queries with ground-truth documents
+            (hard memory), which limits adaptation to newly emerging topics and makes timely human supervision impractical.
+            CREAM introduces <b>adaptive soft memory</b>, which continuously groups and updates semantically related queries and documents,
+            enabling self-supervised learning and robust adaptation to both seen and unseen topics. 
+          </p>
+        </div>
+
+        <figure class="has-text-centered">
+          <img src="static/images/motivation.png"
+               alt="Motivation: Hard memory vs. soft memory for continual retrieval"
+               style="max-width:100%; height:auto; border-radius: 12px;">
+          <figcaption style="margin-top:10px; color:#6b7280;">
+            <b>Figure:</b> Comparison of existing hard memory (top) vs. CREAM’s self-supervised soft memory (bottom).
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Framework Overview -->
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Framework Overview</h2>
+        <div class="content">
+          <p>
+            CREAM operates in sessions and repeats three stages:
+            <b>(1) Retrieval</b> using fine-grained token-level similarity (late-interaction style),
+            <b>(2) Memory Update</b> via streaming clustering with <b>regularized prototypes</b> (RP-LSH-based fixed-length prototype),
+            and <b>(3) Encoder Update</b> through self-supervised contrastive learning using pseudo positive/negative samples
+            selected from soft memory with <b>stratified coreset sampling</b>.
+          </p>
+          <ul>
+            <li><b>Fine-grained similarity</b>: token-level interaction improves robustness without external labels.</li>
+            <li><b>Regularized cluster prototyping</b>: fixed-length prototypes reduce token-wise computation while preserving semantics.</li>
+            <li><b>Stratified coreset sampling</b>: selects diverse, representative training pairs to generalize across evolving topics.</li>
+          </ul>
+        </div>
+
+        <figure class="has-text-centered">
+          <img src="static/images/framework.png"
+               alt="CREAM framework overview"
+               style="max-width:100%; height:auto; border-radius: 12px;">
+          <figcaption style="margin-top:10px; color:#6b7280;">
+            <b>Figure:</b> Overall pipeline of CREAM: Retrieval → Memory Update → Encoder Update.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Experimental Results -->
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Experimental Results (Summary)</h2>
+
+        <div class="content">
+          <p>
+            We evaluate CREAM on two continual retrieval benchmarks (LoTTE and MSMARCO) under shared-pool evaluation.
+            CREAM consistently outperforms strong unsupervised baselines across sessions and achieves performance comparable to
+            (or even exceeding) supervised continual learning methods. 
+          </p>
+
+          <div class="columns">
+            <div class="column">
+              <div class="box">
+                <h3 class="title is-5" style="margin-bottom:8px;">Label-free performance gains</h3>
+                <p style="margin-bottom:10px;">
+                  On average, CREAM surpasses the strongest label-free baseline by
+                  <b>+27.79%</b> (Success@5) and <b>+44.5%</b> (Recall@10). 
+                </p>
+                <p style="color:#6b7280; font-size:0.95rem;">
+                  Reported as overall improvement claim in the paper abstract.
+                </p>
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="box">
+                <h3 class="title is-5" style="margin-bottom:8px;">Best unsupervised averages</h3>
+                <ul style="margin-top:0;">
+                  <li><b>LoTTE:</b> Success@5 = <b>48.60</b>, Recall@10 = <b>27.11</b></li>
+                  <li><b>MSMARCO:</b> Success@5 = <b>73.68</b>, Recall@10 = <b>77.89</b></li>
+                </ul>
+                <p style="color:#6b7280; font-size:0.95rem; margin-top:10px;">
+                  From Tables 1–2 (shared evaluation).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="title is-5" style="margin-top: 12px;">Ablation highlights</h3>
+          <p>
+            Removing fine-grained similarity and prototype regularization causes the largest drop, indicating that token-level
+            semantics and efficient prototyping are critical in the unsupervised setting.
+            (e.g., LoTTE Success@5 drops from 48.60 to 27.23; MSMARCO Success@5 drops from 73.68 to 44.30).
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- End Article -->
+
 
     <!-- BibTeX -->
     <section class="section" id="BibTeX">
