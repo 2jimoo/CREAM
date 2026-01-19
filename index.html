@@ -123,6 +123,10 @@
 
   <style>
     /* Lightweight scroll-to-top + dropdown styles (kept minimal; feel free to move into index.css) */
+    #abstract .content {
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
     .scroll-to-top {
       position: fixed; right: 16px; bottom: 16px;
       width: 44px; height: 44px; border-radius: 999px;
@@ -170,6 +174,13 @@
     .work-info h5 { margin: 0 0 4px 0; font-size: 14px; font-weight: 800; }
     .work-info p { margin: 0 0 6px 0; font-size: 13px; color: #4b5563; }
     .work-venue { font-size: 12px; color: #6b7280; font-weight: 600; }
+    .publication-links,
+    .publication-links .link-block,
+    .publication-links a {
+      position: relative;
+      z-index: 9999;
+      pointer-events: auto;
+    }
   </style>
 </head>
 
@@ -278,7 +289,7 @@
     </section>
 
     <!-- Abstract -->
-    <section class="section hero is-light">
+    <section class="section hero is-light" id="abstract">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
@@ -377,38 +388,6 @@
             We evaluate CREAM on two continual retrieval benchmarks (LoTTE and MSMARCO) under shared-pool evaluation.
             CREAM consistently outperforms strong unsupervised baselines across sessions and achieves performance comparable to
             (or even exceeding) supervised continual learning methods. 
-          </p>
-
-          <div class="columns">
-            <div class="column">
-              <div class="box">
-                <h3 class="title is-5" style="margin-bottom:8px;">Label-free performance gains</h3>
-                <p style="margin-bottom:10px;">
-                  On average, CREAM surpasses the strongest label-free baseline by
-                  <b>+27.79%</b> (Success@5) and <b>+44.5%</b> (Recall@10). 
-                </p>
-                <p style="color:#6b7280; font-size:0.95rem;">
-                  Reported as overall improvement claim in the paper abstract.
-                </p>
-              </div>
-            </div>
-
-            <div class="column">
-              <div class="box">
-                <h3 class="title is-5" style="margin-bottom:8px;">Best unsupervised averages</h3>
-                <ul style="margin-top:0;">
-                  <li><b>LoTTE:</b> Success@5 = <b>48.60</b>, Recall@10 = <b>27.11</b></li>
-                  <li><b>MSMARCO:</b> Success@5 = <b>73.68</b>, Recall@10 = <b>77.89</b></li>
-                </ul>
-                <p style="color:#6b7280; font-size:0.95rem; margin-top:10px;">
-                  From Tables 1–2 (shared evaluation).
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <h3 class="title is-5" style="margin-top: 12px;">Ablation highlights</h3>
-          <p>
             Removing fine-grained similarity and prototype regularization causes the largest drop, indicating that token-level
             semantics and efficient prototyping are critical in the unsupervised setting.
             (e.g., LoTTE Success@5 drops from 48.60 to 27.23; MSMARCO Success@5 drops from 73.68 to 44.30).
